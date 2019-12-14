@@ -3,24 +3,8 @@ import styled, { css } from 'styled-components/macro';
 import { hot } from 'react-hot-loader';
 import './App.css';
 
-const TestStyled = styled.div`
-  width: 200px;
-  height: 200px;
-  border: 1px solid black;
-  padding: 1em;
-  ${props =>
-    props.someProp &&
-    css`
-      color: red;
-    `}
-`;
-
 const App = () => {
-  return (
-    <div className="App">
-      <TestStyled someProp>Hey!</TestStyled>
-    </div>
-  );
+  return <div className="App">Simple Trello</div>;
 };
 
 export default hot(module)(App);
