@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled, { css } from 'styled-components/macro';
 
 const AddToListContainer = styled.div``;
@@ -19,11 +19,23 @@ const AddToListInput = styled.input`
 `;
 
 const AddToListComponent = props => {
+  const { boardId, listId } = props;
+  const inputRef = useRef(null);
+  var AddCardToList = props.AddCardToList;
   return (
     <AddToListContainer>
       <AddToList>
-        <AddToListInput placeholder={'Add To List'} />
-        <AddToListButton>Add</AddToListButton>
+        <AddToListInput ref={inputRef} placeholder={'Add To List'} />
+        <AddToListButton
+          onClick={
+            (listId,
+            boardId,
+            inputRef,
+            e => AddCardToList(listId, boardId, inputRef, e))
+          }
+        >
+          Add
+        </AddToListButton>
       </AddToList>
     </AddToListContainer>
   );

@@ -1,36 +1,36 @@
 export const MockData = [
   {
-    boardId: 1,
+    boardId: 0,
     boardTitle: 'First Board',
     list: [
       {
-        listId: 1,
+        listId: 0,
         listTitle: 'First List',
         cards: [
           {
-            cardId: 1,
+            cardId: 0,
             cardTitle: 'First Card',
             cardContent: 'Some Content In Card',
           },
         ],
       },
       {
-        listId: 2,
+        listId: 1,
         listTitle: 'Second List',
         cards: [
           {
-            cardId: 1,
+            cardId: 0,
             cardTitle: 'First card',
             cardContent: 'Some Content In card',
           },
         ],
       },
       {
-        listId: 3,
+        listId: 2,
         listTitle: 'Third List',
         cards: [
           {
-            cardId: 1,
+            cardId: 0,
             cardTitle: 'First card',
             cardContent: 'Some Content In card',
           },

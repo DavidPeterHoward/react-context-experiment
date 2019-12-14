@@ -1,49 +1,7 @@
-import React from 'react';
+import React, { useState, useReducer } from 'react';
 import styled, { css } from 'styled-components/macro';
 import List from '../List/_List';
-// import MockData from './_mockData';
-
-const MockData = [
-  {
-    boardId: 0,
-    boardTitle: 'First Board',
-    list: [
-      {
-        listId: 1,
-        listTitle: 'First List',
-        cards: [
-          {
-            cardId: 1,
-            cardTitle: 'First Card',
-            cardContent: 'Some Content In Card',
-          },
-        ],
-      },
-      {
-        listId: 2,
-        listTitle: 'Second List',
-        cards: [
-          {
-            cardId: 1,
-            cardTitle: 'First card',
-            cardContent: 'Some Content In card',
-          },
-        ],
-      },
-      {
-        listId: 3,
-        listTitle: 'Third List',
-        cards: [
-          {
-            cardId: 1,
-            cardTitle: 'First card',
-            cardContent: 'Some Content In card',
-          },
-        ],
-      },
-    ],
-  },
-];
+import MockData from './_mockData';
 
 const Board = styled.div`
   width: 100%;
@@ -54,10 +12,61 @@ const Board = styled.div`
   padding: 1em;
 `;
 
+const cardReducer = (boards, action) => {
+  switch (action.type) {
+    case 'ADD_CARD':
+      // Initial filter to find the correct cards array
+      const filter = boards[action.boardId].list.filter(
+        el => el.listId === action.listId,
+      )[0].cards;
+
+      // Grab the length of the cards array to alter the ID-key of the card (make unique)
+      const lengthOfCardArray = filter.length;
+
+      // The new card object to add
+      const ObjToPush = {
+        cardId: lengthOfCardArray + 1,
+        cardTitle: action.title,
+        cardContent: 'nada!',
+      };
+
+      // push to the initial filter
+      const newBoard = filter.push(ObjToPush);
+
+      // return and merge previous state + new state
+      return { ...boards, newBoard };
+
+    case 'MOVE_CARD':
+      /*if(currentPos !== targetPos) {
+        // (1) -> remove card from previous list (currentPos)
+        // (2) -> add card to new list (targetPos)
+      }*/
+      return boards;
+
+    default:
+      return boards;
+  }
+};
+
 const BoardComponent = props => {
+  const [boardData, setBoardData] = useState(MockData);
+
+  const [cards, dispatch] = useReducer(cardReducer, boardData);
+
+  const AddCardToList = (listId, boardId, inputRef, e) => {
+    // todo: modularize to a single 'HandleCardChange'
+    const inputTitle = inputRef.current.value;
+    dispatch({
+      type: 'ADD_CARD',
+      boardId: boardId,
+      listId: listId,
+      title: inputTitle,
+    });
+  };
+
   return (
     <Board>
-      {MockData[props.id].list.map(list => {
+      {boardData[props.id].list.map(list => {
         const { listId, listTitle, cards } = list;
         return (
           <List
@@ -65,7 +74,9 @@ const BoardComponent = props => {
             id={listId}
             title={listTitle}
             cards={cards}
-          ></List>
+            boardId={props.id}
+            AddCardToList={AddCardToList}
+          />
         );
       })}
     </Board>
