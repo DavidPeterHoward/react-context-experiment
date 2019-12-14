@@ -1,30 +1,47 @@
 import React from 'react';
 import styled, { css } from 'styled-components/macro';
 import AddToList from './AddToList/_AddToList';
+import Card from './../Card/_Card';
 
 const ListContainer = styled.div`
   width: 300px;
-  height: 500px;
+  height: 100%;
+  min-height: 300px;
   border: 1px solid black;
   margin: 1em;
   padding: 1em;
+  position: relative;
 `;
 
 const List = styled.div`
   width: 100%;
-  height: 200px;
+  height: 100%;
   border: 1px solid grey;
   position: relative;
 `;
 
 const ListTitle = styled.h3``;
 
-const ListComponent = () => {
+const ListComponent = props => {
+  const { id, title, cards } = props;
+
   return (
-    <ListContainer>
-      <ListTitle>Title of list: [1]</ListTitle>
+    <ListContainer key={id}>
+      <ListTitle>{title}</ListTitle>
       <AddToList></AddToList>
-      <List></List>
+      <List>
+        {cards.map(card => {
+          const { cardId, cardTitle, cardContent } = card;
+          return (
+            <Card
+              key={cardTitle}
+              id={cardId}
+              title={cardTitle}
+              content={cardContent}
+            ></Card>
+          );
+        })}
+      </List>
     </ListContainer>
   );
 };

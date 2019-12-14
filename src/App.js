@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div className="App">
       <h2>Simple Trello</h2>
-      <Board></Board>
+      <Board id={0}></Board>
     </div>
   );
 };

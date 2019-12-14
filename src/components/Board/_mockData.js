@@ -1,11 +1,6 @@
-import React from 'react';
-import styled, { css } from 'styled-components/macro';
-import List from '../List/_List';
-// import MockData from './_mockData';
-
-const MockData = [
+export const MockData = [
   {
-    boardId: 0,
+    boardId: 1,
     boardTitle: 'First Board',
     list: [
       {
@@ -45,31 +40,4 @@ const MockData = [
   },
 ];
 
-const Board = styled.div`
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  padding: 1em;
-`;
-
-const BoardComponent = props => {
-  return (
-    <Board>
-      {MockData[props.id].list.map(list => {
-        const { listId, listTitle, cards } = list;
-        return (
-          <List
-            key={listId}
-            id={listId}
-            title={listTitle}
-            cards={cards}
-          ></List>
-        );
-      })}
-    </Board>
-  );
-};
-
-export default BoardComponent;
+export default MockData;
