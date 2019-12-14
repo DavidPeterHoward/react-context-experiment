@@ -15,33 +15,47 @@ const Board = styled.div`
 const cardReducer = (boards, action) => {
   switch (action.type) {
     case 'ADD_CARD':
-      // Initial filter to find the correct cards array
-      const filter = boards[action.boardId].list.filter(
-        el => el.listId === action.listId,
-      )[0].cards;
-
-      // Grab the length of the cards array to alter the ID-key of the card (make unique)
-      const lengthOfCardArray = filter.length;
-
-      // The new card object to add
-      const ObjToPush = {
-        cardId: lengthOfCardArray + 1,
-        cardTitle: action.title,
-        cardContent: 'nada!',
-      };
-
-      // push to the initial filter
-      const newBoard = filter.push(ObjToPush);
-
-      // return and merge previous state + new state
-      return { ...boards, newBoard };
-
+      var boardById = boards[action.boardId];
+      boardById.list.map(el => {
+        if (el.listId === action.listId) {
+          // The new card object to add
+          const ObjToPush = {
+            cardId: el.cards.length + 1,
+            cardTitle: action.title,
+            cardContent: 'nada!',
+          };
+          return el.cards.push(ObjToPush);
+        } else {
+          return el;
+        }
+      });
+      return { ...boards };
     case 'MOVE_CARD':
       /*if(currentPos !== targetPos) {
         // (1) -> remove card from previous list (currentPos)
         // (2) -> add card to new list (targetPos)
       }*/
       return boards;
+    case 'EDIT_CARD':
+      return boards;
+    case 'DELETE_CARD':
+      var boardById = boards[action.boardId];
+      boardById.list.map(el => {
+        if (el.listId === action.listId) {
+          return el.cards.filter(
+            card => card.cardId !== action.cardId,
+          );
+        }
+      });
+      return { boardById };
+    /*       const filterCards = filterList.filter(el => {
+        if (el.cardId !== action.cardId) {
+        }
+      }); */
+
+    /*       console.log(filterCards); */
+
+    /*       return { ...boards }; */
 
     default:
       return boards;
@@ -51,21 +65,33 @@ const cardReducer = (boards, action) => {
 const BoardComponent = props => {
   const [boardData, setBoardData] = useState(MockData);
 
-  const [cards, dispatch] = useReducer(cardReducer, boardData);
-
-  const AddCardToList = (listId, boardId, inputRef, e) => {
+  const [cards, dispatch] = useReducer(cardReducer, MockData);
+  // AddCardToList
+  const HandleCardAction = (action, listId, boardId, inputRef, e) => {
     // todo: modularize to a single 'HandleCardChange'
-    const inputTitle = inputRef.current.value;
-    dispatch({
-      type: 'ADD_CARD',
-      boardId: boardId,
-      listId: listId,
-      title: inputTitle,
-    });
+    if (action === 'ADD_CARD') {
+      const inputTitle = inputRef.current.value;
+
+      dispatch({
+        type: action,
+        boardId: boardId,
+        listId: listId,
+        title: inputTitle,
+      });
+    }
+    if (action === 'DELETE_CARD') {
+      dispatch({
+        type: action,
+        boardId: boardId,
+        listId: listId,
+        cardId: inputRef,
+      });
+    }
   };
 
   return (
     <Board>
+      {/* todo: change props.id to a real id */}
       {boardData[props.id].list.map(list => {
         const { listId, listTitle, cards } = list;
         return (
@@ -75,7 +101,7 @@ const BoardComponent = props => {
             title={listTitle}
             cards={cards}
             boardId={props.id}
-            AddCardToList={AddCardToList}
+            HandleCardAction={HandleCardAction}
           />
         );
       })}

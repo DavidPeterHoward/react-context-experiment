@@ -23,7 +23,7 @@ const List = styled.div`
 const ListTitle = styled.h3``;
 
 const ListComponent = props => {
-  const { id, title, cards, boardId, AddCardToList } = props;
+  const { id, title, cards, boardId, HandleCardAction } = props;
 
   return (
     <ListContainer key={id}>
@@ -31,7 +31,7 @@ const ListComponent = props => {
       <AddToList
         boardId={boardId}
         listId={id}
-        AddCardToList={AddCardToList}
+        HandleCardAction={HandleCardAction}
       ></AddToList>
       <List>
         {cards.map(card => {
@@ -42,6 +42,9 @@ const ListComponent = props => {
               id={cardId}
               title={cardTitle}
               content={cardContent}
+              HandleCardAction={HandleCardAction}
+              boardId={boardId}
+              listId={id}
             />
           );
         })}

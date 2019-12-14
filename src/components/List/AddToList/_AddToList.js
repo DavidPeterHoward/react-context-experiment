@@ -19,9 +19,9 @@ const AddToListInput = styled.input`
 `;
 
 const AddToListComponent = props => {
-  const { boardId, listId } = props;
+  const { boardId, listId, HandleCardAction } = props;
   const inputRef = useRef(null);
-  var AddCardToList = props.AddCardToList;
+
   return (
     <AddToListContainer>
       <AddToList>
@@ -31,7 +31,14 @@ const AddToListComponent = props => {
             (listId,
             boardId,
             inputRef,
-            e => AddCardToList(listId, boardId, inputRef, e))
+            e =>
+              HandleCardAction(
+                'ADD_CARD',
+                listId,
+                boardId,
+                inputRef,
+                e,
+              ))
           }
         >
           Add

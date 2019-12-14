@@ -8,7 +8,7 @@ export const MockData = [
         listTitle: 'First List',
         cards: [
           {
-            cardId: 0,
+            cardId: 1,
             cardTitle: 'First Card',
             cardContent: 'Some Content In Card',
           },
@@ -19,7 +19,7 @@ export const MockData = [
         listTitle: 'Second List',
         cards: [
           {
-            cardId: 0,
+            cardId: 1,
             cardTitle: 'First card',
             cardContent: 'Some Content In card',
           },
@@ -30,7 +30,7 @@ export const MockData = [
         listTitle: 'Third List',
         cards: [
           {
-            cardId: 0,
+            cardId: 1,
             cardTitle: 'First card',
             cardContent: 'Some Content In card',
           },
