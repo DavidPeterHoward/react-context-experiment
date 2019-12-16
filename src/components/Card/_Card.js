@@ -25,7 +25,7 @@ const CardComponent = props => {
   /*         onClick={ (listId, boardId, id, e => HandleCardAction('DELETE_CARD', listId, boardId, id, e)) */
 
   const HandleCardMove = e => HandlePointerUp(e);
-  //HandleCardData(listId, id, title, content, e)
+
   return (
     <Card
       id={id}

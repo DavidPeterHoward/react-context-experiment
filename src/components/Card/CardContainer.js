@@ -13,7 +13,6 @@ const CardContainer = props => {
 
   const {
     // data
-    key,
     id,
     title,
     content,
@@ -27,13 +26,13 @@ const CardContainer = props => {
 
   const HandlePointerDown = e => {
     // onDown
+    e.target.style.width = e.target.offsetWidth + 'px';
+    e.target.style.height = e.target.offsetHeight + 'px';
     setIsDragging(true);
     e.target.classList.add('dragActive');
     e.target.setPointerCapture(e.pointerId);
-
-    e.target.style.width = e.target.offsetWidth + 'px';
-    e.target.style.height = e.target.offsetHeight + 'px';
   };
+
   /* , ...args HandleCardData*/
   const HandlePointerUp = e => {
     //onUp
@@ -47,7 +46,7 @@ const CardContainer = props => {
 
     e.target.style.left = 'inherit';
     e.target.style.top = 'inherit';
-
+    HandleCardData(listId, id, title, content, e);
     /*
   todo: work on card actions for movement
    *  if(cardInCurrentListID === NewListID)
@@ -136,7 +135,6 @@ const CardContainer = props => {
 
   return (
     <CardComponent
-      key={key}
       id={id}
       title={title}
       content={content}

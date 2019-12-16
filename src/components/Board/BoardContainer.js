@@ -9,6 +9,8 @@ export const BoardContainer = props => {
   const [currentCardData, setCurrentCardData] = useState(null);
   const [newListId, setNewListId] = useState(null);
 
+  const BOARD_ID = 0;
+
   const HandleCardAction = (action, listId, boardId, inputRef, e) => {
     // todo: modularize to a single 'HandleCardChange'
     if (action === 'ADD_CARD') {
@@ -34,7 +36,7 @@ export const BoardContainer = props => {
     if (currentCardData) {
       dispatch({
         type: 'MOVE_CARD',
-        boardId: props.id,
+        boardId: BOARD_ID,
         title: currentCardData.title,
         content: currentCardData.content,
         prevListId: currentCardData.listId,
@@ -44,7 +46,7 @@ export const BoardContainer = props => {
 
       dispatch({
         type: 'DELETE_CARD',
-        boardId: props.id,
+        boardId: BOARD_ID,
         listId: currentCardData.listId,
         cardId: currentCardData.id,
       });
