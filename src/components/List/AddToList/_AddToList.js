@@ -22,25 +22,14 @@ const AddToListComponent = props => {
   const { boardId, listId, HandleCardAction } = props;
   const inputRef = useRef(null);
 
+  const HandleCardAddition = e =>
+    HandleCardAction('ADD_CARD', listId, boardId, inputRef, e);
+
   return (
     <AddToListContainer>
       <AddToList>
         <AddToListInput ref={inputRef} placeholder={'Add To List'} />
-        <AddToListButton
-          onClick={
-            (listId,
-            boardId,
-            inputRef,
-            e =>
-              HandleCardAction(
-                'ADD_CARD',
-                listId,
-                boardId,
-                inputRef,
-                e,
-              ))
-          }
-        >
+        <AddToListButton onClick={HandleCardAddition}>
           Add
         </AddToListButton>
       </AddToList>
