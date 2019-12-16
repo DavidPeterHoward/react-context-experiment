@@ -12,7 +12,21 @@ const Board = styled.div`
   padding: 1em;
 `;
 
+const pullAtIndex = (arr, pullArr) => {
+  let removed = [];
+  let pulled = arr
+    .map((v, i) => (pullArr.includes(i) ? removed.push(v) : v))
+    .filter((v, i) => !pullArr.includes(i));
+  arr.length = 0;
+  pulled.forEach(v => arr.push(v));
+  return removed;
+};
+
 const cardReducer = (boards, action) => {
+  /*   const ifListsMatch = (boardList, actionList ) => {
+    return boardList === actionList
+  } */
+
   switch (action.type) {
     case 'ADD_CARD':
       var boardById = boards[action.boardId];
@@ -42,20 +56,17 @@ const cardReducer = (boards, action) => {
       var boardById = boards[action.boardId];
       boardById.list.map(el => {
         if (el.listId === action.listId) {
-          return el.cards.filter(
-            card => card.cardId !== action.cardId,
-          );
+          return el.cards.map(card => {
+            if (card.cardId === action.cardId) {
+              el.cards = el.cards.filter(ca => {
+                el.cards = ca.cardId !== action.cardId;
+                return el.cards;
+              });
+            }
+          });
         }
       });
-      return { boardById };
-    /*       const filterCards = filterList.filter(el => {
-        if (el.cardId !== action.cardId) {
-        }
-      }); */
-
-    /*       console.log(filterCards); */
-
-    /*       return { ...boards }; */
+      return { ...boards };
 
     default:
       return boards;
