@@ -5,9 +5,11 @@ export const Card = styled.div`
   min-height: 80px;
   padding: 1em;
   margin: 1em;
+  cursor: grab;
   &.dragActive {
     background: red;
     position: absolute;
+    cursor: grabbing !important;
   }
 `;
 

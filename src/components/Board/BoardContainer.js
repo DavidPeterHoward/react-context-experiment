@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import BoardComponent from './_Board';
 import MockData from '../_Data/MockData';
 import CardReducer from '../_Reducers/CardReducer';
@@ -10,6 +10,13 @@ export const BoardContainer = props => {
   const [newListId, setNewListId] = useState(null);
 
   const BOARD_ID = 0;
+
+  useEffect(() => {
+    if (currentCardData) {
+      HandleMoveCard();
+    } else {
+    }
+  }, [currentCardData]);
 
   const HandleCardAction = (action, listId, boardId, inputRef, e) => {
     // todo: modularize to a single 'HandleCardChange'
@@ -31,7 +38,6 @@ export const BoardContainer = props => {
       });
     }
   };
-
   const HandleDispatch = () => {
     if (currentCardData) {
       dispatch({
@@ -54,15 +60,16 @@ export const BoardContainer = props => {
     setCurrentCardData(null);
   };
 
-  const HandleMoveCard = e => {
-    var listId = e.currentTarget.dataset.listid;
-    setNewListId(listId);
-    if (currentCardData && listId !== currentCardData.listId) {
+  const HandleMoveCard = () => {
+    if (newListId !== undefined && currentCardData !== null) {
       HandleDispatch();
+    } else {
+      console.warn('dispatch error');
     }
   };
 
   const HandleCardData = (
+    nextListId,
     currentListId,
     sentCardId,
     title,
@@ -75,6 +82,7 @@ export const BoardContainer = props => {
       content: content,
       listId: currentListId,
     });
+    setNewListId(nextListId);
   };
 
   return (
@@ -82,6 +90,7 @@ export const BoardContainer = props => {
       id={0}
       data={boardData}
       HandleCardAction={HandleCardAction}
+      HandleMoveCard={HandleMoveCard}
       HandleCardData={HandleCardData}
     />
   );

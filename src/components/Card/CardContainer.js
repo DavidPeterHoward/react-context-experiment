@@ -8,8 +8,10 @@ const CardContainer = props => {
 
   const [currentLeft, setCurrentLeft] = useState(0);
   const [currentTop, setCurrentTop] = useState(0);
-  const [prevDrop, setPrevDrop] = useState(0);
-  const [prevDropChild, setPrevDropChild] = useState(0);
+
+  const [dropList, setDropList] = useState(null);
+  const [prevDrop, setPrevDrop] = useState(null);
+  const [prevDropChild, setPrevDropChild] = useState(null);
 
   const {
     // data
@@ -22,6 +24,7 @@ const CardContainer = props => {
     // actions
     HandleCardData,
     HandleCardAction,
+    HandleMoveCard,
   } = props;
 
   const HandlePointerDown = e => {
@@ -46,18 +49,16 @@ const CardContainer = props => {
 
     e.target.style.left = 'inherit';
     e.target.style.top = 'inherit';
-    HandleCardData(listId, id, title, content, e);
-    /*
-  todo: work on card actions for movement
-   *  if(cardInCurrentListID === NewListID)
-   *  HandleCardAction('MOVE_CARD_BETWEEN_LISTS', listId, boardId, id, e)
-   *
-   *  If(CardInCurrentListID !== NewListID)
-   *  HandleCardAction('MOVE_WITHIN_LIST', listId, boardId, id, e)
-   *
-   * PASS THE POSITION OF
-   *
-   */
+    if (
+      dropList !== null &&
+      dropList !== undefined &&
+      prevDrop !== dropList
+    ) {
+      // console.log('here now');
+      HandleCardData(dropList, listId, id, title, content, e);
+    } else {
+      // console.log('handle erorr');
+    }
   };
 
   const ExtractPositionDelta = e => {
@@ -75,55 +76,31 @@ const CardContainer = props => {
     return delta;
   };
 
+  const CheckElementBelow = e => {
+    e.target.hidden = true;
+    const elemBelow = document.elementFromPoint(e.clientX, e.clientY);
+    // console.dir(elemBelow);
+    e.target.hidden = false;
+    var droppableBelow = elemBelow.closest('.list');
+    setPrevDrop(droppableBelow);
+    if (droppableBelow !== null) {
+      return (droppableBelow = droppableBelow.dataset.listid);
+    }
+  };
+
   const HandlePointerMove = e => {
     // onMove
-    // todo: split into smaller functions
     if (!isDragging) {
       return;
     }
-    e.target.hidden = true;
-    let elemBelow = document.elementFromPoint(e.clientX, e.clientY);
-    // console.dir(elemBelow);
-    e.target.hidden = false;
-    let droppableBelow = elemBelow.closest('.list');
-    setPrevDrop(droppableBelow);
+    const droppableBelow = CheckElementBelow(e);
 
-    if (droppableBelow === prevDrop && droppableBelow !== null) {
-      // potential to find child elements
-      e.target.hidden = true;
-      let childBelow = document.elementFromPoint(
-        e.clientX,
-        e.clientY,
-      );
-      e.target.hidden = false;
-      let droppableChild = childBelow.closest(
-        '.card:not(.dragActive)',
-      );
-      setPrevDropChild(droppableChild);
-      if (
-        droppableChild !== null &&
-        droppableChild !== prevDropChild
-      ) {
-        console.log(droppableChild);
-      }
+    if (
+      parseInt(droppableBelow) !== listId &&
+      droppableBelow !== null
+    ) {
+      setDropList(droppableBelow);
     }
-
-    if (droppableBelow !== prevDrop && droppableBelow !== null) {
-      console.log(droppableBelow);
-      e.target.hidden = true;
-      let childBelow = document.elementFromPoint(
-        e.clientX,
-        e.clientY,
-      );
-      e.target.hidden = false;
-      let droppableChild = childBelow.closest(
-        '.card:not(.dragActive)',
-      );
-      if (droppableChild !== null) {
-        console.log(droppableChild);
-      }
-    }
-
     const { left, top } = ExtractPositionDelta(e);
 
     setCurrentTop(currentTop + top);
@@ -133,13 +110,18 @@ const CardContainer = props => {
     e.target.style.top = currentTop + top + 'px';
   };
 
+  /* const CheckDroppable = e => {
+
+}
+ */
+
   return (
     <CardComponent
       id={id}
       title={title}
       content={content}
       boardId={boardId}
-      listId={id}
+      listId={listId}
       HandleCardAction={HandleCardAction}
       HandleCardData={HandleCardData}
       HandlePointerDown={HandlePointerDown}

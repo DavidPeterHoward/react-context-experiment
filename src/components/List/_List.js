@@ -17,6 +17,7 @@ const ListComponent = props => {
     // actions
     HandleCardAction,
     HandleCardData,
+    HandleMoveCard,
   } = props;
 
   return (
@@ -39,6 +40,7 @@ const ListComponent = props => {
               boardId={boardId}
               listId={id}
               HandleCardAction={HandleCardAction}
+              HandleMoveCard={HandleMoveCard}
               HandleCardData={HandleCardData}
             />
           );

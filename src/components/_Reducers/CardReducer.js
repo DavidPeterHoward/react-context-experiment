@@ -8,7 +8,7 @@ export const CardReducer = (boards, action) => {
         console.log(el.listId + ' : ' + action.listId);
         if (el.listId === action.listId) {
           // The new card object to add
-          console.log('working?');
+          // console.log('working?');
           const ObjToPush = {
             cardId: el.cards.length + 1,
             cardTitle: action.title,
@@ -21,7 +21,7 @@ export const CardReducer = (boards, action) => {
       });
       return { ...boards };
     case 'MOVE_CARD':
-      console.log('are we here too?');
+      // console.log('are we here too?');
       var boardById = boards[action.boardId];
       const prevList = action.prevListId;
       /*       console.log(prevList);
@@ -31,14 +31,20 @@ export const CardReducer = (boards, action) => {
         console.log('list loop list: ' + initialList.listId); */
         /*         console.log('we need to cycle' + initialList.listId);
         console.log('we need to match' + action.listId); */
-        if (initialList.listId === parseInt(action.listId)) {
+        if (
+          initialList.listId === parseInt(action.listId) &&
+          parseInt(action.listId) !== parseInt(action.prevListId) &&
+          parseInt(action.listId) !== parseInt(action.prevListId)
+        ) {
           const ObjToPush = {
             cardId: initialList.cards.length + 1,
             cardTitle: action.title,
             cardContent: action.content,
           };
+          // console.log("i should've done something");
           return initialList.cards.push(ObjToPush);
         } else {
+          // console.log('SOMETHING WENT WRONG!?');
           return initialList;
         }
         /*         if (initialList.listId === parseInt(prevList)) {
