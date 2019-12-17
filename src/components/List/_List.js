@@ -31,6 +31,7 @@ const ListComponent = props => {
       <List>
         {cards.map(SingleCard => {
           const { cardId, cardTitle, cardContent } = SingleCard;
+
           return (
             <CardContainer
               key={cardId + cardTitle}

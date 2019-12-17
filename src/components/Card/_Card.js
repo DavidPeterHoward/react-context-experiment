@@ -18,6 +18,7 @@ const CardComponent = props => {
     HandlePointerDown,
     HandlePointerUp,
     HandlePointerMove,
+    HandleOnClick,
   } = props;
 
   const HandleCardDelete = e =>
@@ -30,6 +31,7 @@ const CardComponent = props => {
     <Card
       id={id}
       className={'card'}
+      onClick={HandleOnClick}
       onPointerDown={HandlePointerDown}
       onPointerUp={HandleCardMove}
       onPointerMove={HandlePointerMove}

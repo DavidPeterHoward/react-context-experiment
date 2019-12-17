@@ -4,8 +4,13 @@ export const CardReducer = (boards, action) => {
   switch (action.type) {
     case 'ADD_CARD':
       var boardById = boards[action.boardId];
+      if (boardById.list === undefined) {
+        console.log('error!');
+        console.log(action.boardId);
+      }
+      // console.log(typeof boardById);
       boardById.list.map(el => {
-        console.log(el.listId + ' : ' + action.listId);
+        /*         console.log(el.listId + ' : ' + action.listId); */
         if (el.listId === action.listId) {
           // The new card object to add
           // console.log('working?');
@@ -16,9 +21,10 @@ export const CardReducer = (boards, action) => {
           };
           return el.cards.push(ObjToPush);
         } else {
-          return el;
+          console.log(el);
         }
       });
+      console.log({ ...boards });
       return { ...boards };
     case 'MOVE_CARD':
       // console.log('are we here too?');
@@ -64,8 +70,40 @@ export const CardReducer = (boards, action) => {
       return { ...boards };
     case 'REORDER_CARD':
       return { ...boards };
-    case 'EDIT_CARD':
-      return boards;
+    case 'ADD_LIST':
+      console.log('add_list_reducer has started');
+      var CurrentBoard = boards;
+      // console.log(CurrentBoard2);
+
+      var Holder = CurrentBoard.map(el => {
+        if (el.boardId === action.boardId) {
+          const ListToPush = {
+            listId: el.list.length,
+            listTitle: action.title,
+            listContent: 'nada!',
+            cards: [
+              {
+                cardId: 0,
+                cardTitle: 'NEW CARD',
+                cardContent: 'Some Content In Card',
+              },
+            ],
+          };
+          el.list.push(ListToPush);
+
+          return el;
+        }
+        return el;
+      });
+
+      /*       var boardById = boards[action.boardId];
+      boardById.list.push('hey!');
+ */
+      /*       console.log(boardById.list);
+
+      console.log(boardById); */
+
+      return Holder;
     case 'DELETE_CARD':
       var boardById = boards[action.boardId];
       boardById.list.map(initialList => {

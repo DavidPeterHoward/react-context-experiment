@@ -4,10 +4,10 @@ import MockData from '../_Data/MockData';
 import CardReducer from '../_Reducers/CardReducer';
 
 export const BoardContainer = props => {
-  const [cards, dispatch] = useReducer(CardReducer, MockData);
   const [boardData, setBoardData] = useState(MockData);
   const [currentCardData, setCurrentCardData] = useState(null);
   const [newListId, setNewListId] = useState(null);
+  const [cards, dispatch] = useReducer(CardReducer, MockData);
 
   const BOARD_ID = 0;
 
@@ -35,6 +35,22 @@ export const BoardContainer = props => {
         boardId: boardId,
         listId: listId,
         cardId: inputRef,
+      });
+    }
+    if (action === 'ADD_LIST') {
+      const inputTitle = inputRef.current.value;
+      console.log('at dispatch');
+      console.group();
+      console.log(action);
+      console.log(listId);
+      console.log(boardId);
+      console.log(inputRef);
+      console.dir(e.target);
+      console.groupEnd();
+      dispatch({
+        type: action,
+        boardId: boardId,
+        title: inputTitle,
       });
     }
   };
