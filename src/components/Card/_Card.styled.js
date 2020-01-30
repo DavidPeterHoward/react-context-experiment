@@ -1,13 +1,13 @@
-import styled, { css } from 'styled-components/macro';
+import styled, { css } from "styled-components/macro";
 
 export const Card = styled.div`
-  border: 1px solid blue;
+  border: 1px solid #ececec;
   min-height: 80px;
   padding: 1em;
   margin: 1em;
   cursor: grab;
   &.dragActive {
-    background: red;
+    background: #fff;
     position: absolute;
     cursor: grabbing !important;
   }

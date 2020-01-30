@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components/macro';
+import styled, { css } from "styled-components/macro";
 
 export const ListContainer = styled.div`
   width: 300px;
@@ -8,7 +8,7 @@ export const ListContainer = styled.div`
   margin: 1em;
   padding: 1em;
   &:hover {
-    background: salmon;
+    background: #f5fbff;
   }
 `;
 
