@@ -15,7 +15,7 @@ export const ListContainer = styled.div`
 export const List = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid grey;
+  /* border: 1px solid grey; */
 `;
 
 export const ListTitle = styled.h3``;
