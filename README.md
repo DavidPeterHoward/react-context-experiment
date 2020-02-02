@@ -1,3 +1,3 @@
-# React (CRA) + Styled-Components
+# React-Context Experiment (instead of redux)
 
-- Includes config files for stylelint, prettier, babel, & eslint
+Incorporates my own custom drag'n'drop experiment as well as utilsiing context-API for state management.

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import CardComponent from './_Card';
+import React, { useState } from "react";
+import CardComponent from "./_Card";
 
 const CardContainer = props => {
   // check if dragging
@@ -29,7 +29,7 @@ const CardContainer = props => {
     // actions
     HandleCardData,
     HandleCardAction,
-    HandleMoveCard,
+    HandleMoveCard
   } = props;
 
   const HandlePointerDown = e => {
@@ -37,27 +37,23 @@ const CardContainer = props => {
 
     // makes sure the width / height of the element is the same
     // when positioned absolutely
-    e.target.style.width = e.target.offsetWidth + 'px';
-    e.target.style.height = e.target.offsetHeight + 'px';
+    e.target.style.width = e.target.offsetWidth + "px";
+    e.target.style.height = e.target.offsetHeight + "px";
 
     setIsDragging(true);
-    e.target.classList.add('dragActive');
+    e.target.classList.add("dragActive");
     e.target.setPointerCapture(e.pointerId);
   };
 
   const HandlePointerUp = e => {
     //onUp
     setIsDragging(false);
-    e.target.classList.remove('dragActive');
+    e.target.classList.remove("dragActive");
     e.target.releasePointerCapture(e.pointerId);
 
-    e.target.style.left = 'inherit';
-    e.target.style.top = 'inherit';
-    if (
-      dropList !== null &&
-      dropList !== undefined &&
-      prevDrop !== dropList
-    ) {
+    e.target.style.left = "inherit";
+    e.target.style.top = "inherit";
+    if (dropList !== null && dropList !== undefined && prevDrop !== dropList) {
       HandleCardData(dropList, listId, id, title, content, e);
     } else {
     }
@@ -70,7 +66,7 @@ const CardContainer = props => {
 
     const delta = {
       left: left - previousLeft,
-      top: top - previousTop,
+      top: top - previousTop
     };
     setPreviousTop(top);
     setPreviousLeft(left);
@@ -82,7 +78,7 @@ const CardContainer = props => {
     e.target.hidden = true;
     const elemBelow = document.elementFromPoint(e.clientX, e.clientY);
     e.target.hidden = false;
-    var droppableBelow = elemBelow.closest('.list');
+    var droppableBelow = elemBelow.closest(".list");
     setPrevDrop(droppableBelow);
     if (droppableBelow !== null) {
       return (droppableBelow = droppableBelow.dataset.listid);
@@ -96,10 +92,7 @@ const CardContainer = props => {
     }
     const droppableBelow = CheckElementBelow(e);
 
-    if (
-      parseInt(droppableBelow) !== listId &&
-      droppableBelow !== null
-    ) {
+    if (parseInt(droppableBelow) !== listId && droppableBelow !== null) {
       setDropList(droppableBelow);
     }
     const { left, top } = ExtractPositionDelta(e);
@@ -107,13 +100,12 @@ const CardContainer = props => {
     setCurrentTop(currentTop + top);
     setCurrentLeft(currentLeft + left);
 
-    e.target.style.left = currentLeft + left + 'px';
-    e.target.style.top = currentTop + top + 'px';
+    e.target.style.left = currentLeft + left + "px";
+    e.target.style.top = currentTop + top + "px";
   };
 
   const HandleOnClick = e => {
     // todo: make this create a modal for editing 'cards'
-    console.log(e.target);
   };
 
   return (

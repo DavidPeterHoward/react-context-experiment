@@ -1,8 +1,8 @@
-import React from 'react';
-import styled, { css } from 'styled-components/macro';
-import { hot } from 'react-hot-loader';
-import BoardContainer from './components/Board/BoardContainer';
-import './App.css';
+import React from "react";
+import styled, { css } from "styled-components/macro";
+import { hot } from "react-hot-loader";
+import BoardContainer from "./components/Board/BoardContainer";
+import "./App.css";
 
 const App = () => {
   return (

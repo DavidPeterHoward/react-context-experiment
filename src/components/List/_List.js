@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import styled, { css } from 'styled-components/macro';
-import AddToList from './AddToList/_AddToList';
+import React, { useState } from "react";
+import styled, { css } from "styled-components/macro";
+import AddToList from "./AddToList/_AddToList";
 // import Card from './../Card/_Card';
-import CardContainer from './../Card/CardContainer';
+import CardContainer from "./../Card/CardContainer";
 
-import { ListContainer, List, ListTitle } from './_List.styled.js';
+import { ListContainer, List, ListTitle } from "./_List.styled.js";
 
 const ListComponent = props => {
   const {
@@ -17,11 +17,11 @@ const ListComponent = props => {
     // actions
     HandleCardAction,
     HandleCardData,
-    HandleMoveCard,
+    HandleMoveCard
   } = props;
 
   return (
-    <ListContainer key={id} data-listid={id} className={'list'}>
+    <ListContainer key={id} data-listid={id} className={"list"}>
       <ListTitle>{title}</ListTitle>
       <AddToList
         boardId={boardId}

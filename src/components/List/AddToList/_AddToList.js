@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import styled, { css } from 'styled-components/macro';
+import React, { useRef } from "react";
+import styled, { css } from "styled-components/macro";
 
 const AddToListContainer = styled.div``;
 
@@ -23,15 +23,13 @@ const AddToListComponent = props => {
   const inputRef = useRef(null);
 
   const HandleCardAddition = e =>
-    HandleCardAction('ADD_CARD', listId, boardId, inputRef, e);
+    HandleCardAction("ADD_CARD", listId, boardId, inputRef, e);
 
   return (
     <AddToListContainer>
       <AddToList>
-        <AddToListInput ref={inputRef} placeholder={'Add To List'} />
-        <AddToListButton onClick={HandleCardAddition}>
-          Add
-        </AddToListButton>
+        <AddToListInput ref={inputRef} placeholder={"Add To List"} />
+        <AddToListButton onClick={HandleCardAddition}>Add</AddToListButton>
       </AddToList>
     </AddToListContainer>
   );

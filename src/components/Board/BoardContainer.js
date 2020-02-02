@@ -1,7 +1,7 @@
-import React, { useState, useReducer, useEffect } from 'react';
-import BoardComponent from './_Board';
-import MockData from '../_Data/MockData';
-import CardReducer from '../_Reducers/CardReducer';
+import React, { useState, useReducer, useEffect } from "react";
+import BoardComponent from "./_Board";
+import MockData from "../_Data/MockData";
+import CardReducer from "../_Reducers/CardReducer";
 
 export const BoardContainer = props => {
   const [boardData, setBoardData] = useState(MockData);
@@ -20,57 +20,57 @@ export const BoardContainer = props => {
 
   const HandleCardAction = (action, listId, boardId, inputRef, e) => {
     // todo: modularize to a single 'HandleCardChange'
-    if (action === 'ADD_CARD') {
+    if (action === "ADD_CARD") {
       const inputTitle = inputRef.current.value;
       dispatch({
         type: action,
         boardId: boardId,
         listId: listId,
-        title: inputTitle,
+        title: inputTitle
       });
     }
-    if (action === 'DELETE_CARD') {
+    if (action === "DELETE_CARD") {
       dispatch({
         type: action,
         boardId: boardId,
         listId: listId,
-        cardId: inputRef,
+        cardId: inputRef
       });
     }
-    if (action === 'ADD_LIST') {
+    if (action === "ADD_LIST") {
       const inputTitle = inputRef.current.value;
-      console.log('at dispatch');
+      /*       console.log('at dispatch');
       console.group();
       console.log(action);
       console.log(listId);
       console.log(boardId);
       console.log(inputRef);
       console.dir(e.target);
-      console.groupEnd();
+      console.groupEnd(); */
       dispatch({
         type: action,
         boardId: boardId,
-        title: inputTitle,
+        title: inputTitle
       });
     }
   };
   const HandleDispatch = () => {
     if (currentCardData) {
       dispatch({
-        type: 'MOVE_CARD',
+        type: "MOVE_CARD",
         boardId: BOARD_ID,
         title: currentCardData.title,
         content: currentCardData.content,
         prevListId: currentCardData.listId,
         listId: newListId,
-        cardId: currentCardData.id,
+        cardId: currentCardData.id
       });
 
       dispatch({
-        type: 'DELETE_CARD',
+        type: "DELETE_CARD",
         boardId: BOARD_ID,
         listId: currentCardData.listId,
-        cardId: currentCardData.id,
+        cardId: currentCardData.id
       });
     }
     setCurrentCardData(null);
@@ -80,7 +80,7 @@ export const BoardContainer = props => {
     if (newListId !== undefined && currentCardData !== null) {
       HandleDispatch();
     } else {
-      console.warn('dispatch error');
+      // console.warn("dispatch error");
     }
   };
 
@@ -90,13 +90,13 @@ export const BoardContainer = props => {
     sentCardId,
     title,
     content,
-    e,
+    e
   ) => {
     setCurrentCardData({
       id: sentCardId,
       title: title,
       content: content,
-      listId: currentListId,
+      listId: currentListId
     });
     setNewListId(nextListId);
   };
